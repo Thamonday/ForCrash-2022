@@ -1,0 +1,351 @@
+{%extends 'layout2.html' %} 
+{% block content%}
+<!DOCTYPE html>
+<html lang="th">
+    <head>           
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--ดูดีทุกขนาดจอ-->
+        <meta name="description" content="...information about the web page">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        {% load static %}
+        <style>        
+            @import url('https://fonts.googleapis.com/css?family=Kanit|Prompt:wght@600|Prompt|=Noto+Serif+Display:wght@900');
+    
+            html,body {
+                font-family: 'Kanit', sans-serif;
+                background-color: #C0DDED;
+                text-align: center;
+            }
+            /* Hide the browser's default checkbox */
+            .container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+            }
+    
+            /* Create a custom checkbox */
+            .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #eee;
+            }
+    
+            /* On mouse-over, add a grey background color */
+            .container:hover input ~ .checkmark {
+            background-color: #ccc;
+            }
+    
+            /* When the checkbox is checked, add a blue background */
+            .container input:checked ~ .checkmark {
+            background-color: #2196F3;
+            }
+    
+            /* Create the checkmark/indicator (hidden when not checked) */
+            .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+            }
+    
+            /* Show the checkmark when checked */
+            .container input:checked ~ .checkmark:after {
+            display: block;
+            }
+    
+            /* Style the checkmark/indicator */
+            .container .checkmark:after {
+            left: 9px;
+            top: 5px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+            }
+    
+            .menu_item{
+            color: black;
+            font-family: 'Prompt', sans-serif;
+            display: inline-block;
+            border-radius: 20px;
+            padding: 9px;
+            text-decoration: none;
+            margin-right: 8px;
+            }
+    
+            .logotext{
+                color: #323232;
+                padding: 4px;
+                font-size: 22px;
+                font-family: 'Noto Serif Display', serif;
+                position:relative;
+                /* cursor: default; */
+            }
+    
+            img{
+            padding: 0px;
+            }
+    
+            h1 {
+                font-size: 30px;
+                font-family: 'Kanit', sans-serif;
+                color: black;
+            }
+    
+            h2 {
+                font-size: 20px;
+                font-weight: bolder;
+                font-family: 'Prompt:wght@600', sans-serif;
+                color: black;
+            }
+    
+            h3 {
+                font-size: 16px;
+                font-family: 'Prompt', sans-serif;
+                color: black;
+            }
+            .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+            }
+    
+            .box {  
+            text-align: justify;
+            font-size: 16px;
+            font-family: 'Kanit', sans-serif;
+            border-radius: 25px;
+            background-color: whitesmoke;
+            padding: 30px;
+    
+            }
+    
+            .pop_up {
+            border-radius: 15px;
+            max-width: 700px;
+            margin-top: 70px;
+            margin-left: auto;
+            margin-right: auto;
+            }
+    
+            .submit_button {
+            background-color:#FFF0BD ;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 10px;
+            padding: 4px;
+            }
+    
+            .formbox{
+            text-align: justify;
+            font-size: 16px;
+            font-family: 'Kanit', sans-serif;
+            background-color: whitesmoke;
+            width: 1000px;
+            height: 600px;
+            border-radius: 25px;
+            padding: 40px;
+            padding: 40px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+        <h1 style="margin-top: 30px;">ประวัติการทำนาย</h1>
+        <!-- <a>{{email}}</a> -->
+        <table class="table table-striped table-light">
+            <thead>
+              <tr class="thead-dark"> 
+                <th scope="col">#</th>
+                <th scope="col">วันที่และเวลา</th>
+                <th scope="col">เลข HN</th>
+                <th scope="col">ผลการทำนาย</th>
+                <th scope="col">ER triage</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody id="tbody1">
+                
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">อัพเดตข้อมูล</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body" style="text-align: left;">
+                    <label class="labs ">วันที่และเวลา: </label>
+                    <input type="text" id="ModTime"> <br>
+                    <label class="labs ">เลข HN: </label>
+                    <input type="text" id="ModHN"> <br>
+                    <label class="labs">ผลการทำนาย: </label>
+                    <input type="text" id="ModResult"> <br>
+                    <label class="labs">ER triage: </label>
+                    <input type="text" id="ModER"> <br>
+                </div>
+                <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                <button id="delbtn" type="button" class="btn btn-danger" onclick="deletefn()">Delete</button>
+                <button id="upbtn" type="button" class="btn btn-primary" onclick="update()">Update</button>
+                
+                </div>
+            </div>
+            </div>
+        </div>
+            <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+            <script id="MainScript">
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyD3qcCh1MxUoiqk7dld7hLuGVmx--ri3hY",
+                authDomain: "forcrashdemo.firebaseapp.com",
+                databaseURL: "https://forcrashdemo-default-rtdb.firebaseio.com",
+                projectId: "forcrashdemo",
+                storageBucket: "forcrashdemo.appspot.com",
+                messagingSenderId: "G-FJMZLMD0ZY",
+                appId: "1:216908476609:web:872afce2e6255e1e1fe440",
+            };
+            firebase.initializeApp(config);
+            var Email = "{{email}}"
+            var keyf = [];
+            // document.write(Email);
+            var stdNo 
+            
+            function SelectAllData(){
+                document.getElementById("tbody1").innerHTML="";
+                stdNo = 0;
+                firebase.database().ref('Form').orderByChild("email").equalTo(Email).once('value',
+                function (AllRecords){
+                    AllRecords.forEach(
+                        function(CurrentRecord){
+                            // document.write("1Complete");
+                            var datetime = CurrentRecord.val().datetime;
+                            var HN = CurrentRecord.val().HN;
+                            var result = CurrentRecord.val().result;
+                            var ERTriage = CurrentRecord.val().ERTriage;
+                            keyf.push([CurrentRecord.key]);
+                            AddItemsToTable(datetime,HN,result,ERTriage);
+                        }
+                    );
+                });
+            }
+            // document.write(keyf);
+            window.onload = SelectAllData;
+            // document.write("2Complete")
+            
+            var stdlist = [];
+            function AddItemsToTable(datetime,HN,result,ERTriage){
+                // document.write("3Complete")
+                var tbody = document.getElementById('tbody1');
+                var trow= document.createElement('tr');
+                var td1 =document.createElement('td');
+                var td2 =document.createElement('td');
+                var td3 = document.createElement('td');
+                var td4 = document.createElement('td');
+                var td5 = document.createElement('td');
+                var editbutton = document.createElement('div'); 
+                stdlist.push([datetime,HN,result,ERTriage]);
+                td1.innerHTML= ++stdNo;
+                td2.innerHTML= datetime;
+                td3.innerHTML= HN;
+                td4.innerHTML= result;
+                td5.innerHTML = ERTriage;
+                trow.appendChild(td1);
+                trow.appendChild(td2);
+                trow.appendChild(td3);
+                trow.appendChild(td4);
+                trow.appendChild(td5);
+                
+                editbutton.innerHTML = '<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalCenter" onclick="FillTboxes('+stdNo+')">แก้ไข</button>';
+                // editbutton.innerHTML += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="FillTboxes(null)">delete</button>'
+                
+                trow.appendChild(editbutton);
+                tbody.appendChild(trow);
+                }
+            var ModTime = document.getElementById('ModTime');
+            var ModResult = document.getElementById('ModResult');
+            var ModHN = document.getElementById('ModHN');
+            var ModER = document.getElementById('ModER');
+            var ModKeyf
+            var BTNmodUpd = document.getElementById('upbtn');
+            var BTNmodDel = document.getelementById ('delbtn');
+
+            function FillTboxes(index){
+                --index; 
+                ModTime.value = stdlist[index][0];
+                ModHN.value =stdlist[index][1];
+                ModResult.value =stdlist[index][2];
+                ModER.value = stdlist[index][3];
+                ModKeyf = keyf[index][0];
+                ModResult.disabled = true;
+                BTNmodupd.style.display='inline-block';
+                BTNmodDel.style.display='inline-block';
+            }
+            // function update(){
+            //     // document.write("Form/"+ModKeyf)
+            //     firebase.database().ref("Form/"+ModKeyf)
+            // }
+            function update(){
+                
+                firebase.database().ref("Form/"+ModKeyf).update(
+                    {
+                        datetime: ModTime.value,
+                        HN: ModHN.value,
+                        ERTriage: ModER.value
+                    },
+                (error) =>{
+                    if(error){
+                        alert("record was not Updated, there was some problem");
+                    }
+                    else{
+                        alert("record was updated");
+                        SelectAllData();
+                        window.location.reload();
+                    }
+                }
+                )
+            }
+            function deletefn(){
+                firebase.database().ref("Form/"+ModKeyf).remove().then(
+                    function(){
+                        alert("record was deleted");
+                        SelectAllData();
+                        window.location.reload();
+                        }
+                )
+            }
+                                            
+                
+        </script>
+    </body>
+</html>
+{% endblock%}

@@ -1,0 +1,359 @@
+
+{%extends 'layout2.html' %} 
+{% block content%}
+{% load static %}
+<head>
+    <style>        
+        @import url('https://fonts.googleapis.com/css?family=Kanit|Prompt:wght@600|Prompt|=Noto+Serif+Display:wght@900');
+
+        html,body {
+            font-family: 'Kanit', sans-serif;
+            background-color: #C0DDED;
+            text-align: center;
+        }
+        /* Hide the browser's default checkbox */
+        .container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+        }
+
+        /* Create a custom checkbox */
+        .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 25px;
+        width: 25px;
+        background-color: #eee;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .container:hover input ~ .checkmark {
+        background-color: #ccc;
+        }
+
+        /* When the checkbox is checked, add a blue background */
+        .container input:checked ~ .checkmark {
+        background-color: #2196F3;
+        }
+
+        /* Create the checkmark/indicator (hidden when not checked) */
+        .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+        }
+
+        /* Show the checkmark when checked */
+        .container input:checked ~ .checkmark:after {
+        display: block;
+        }
+
+        /* Style the checkmark/indicator */
+        .container .checkmark:after {
+        left: 9px;
+        top: 5px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+        }
+
+        .menu_item{
+        color: black;
+        font-family: 'Prompt', sans-serif;
+        display: inline-block;
+        border-radius: 20px;
+        padding: 9px;
+        text-decoration: none;
+        margin-right: 8px;
+        }
+
+        .logotext{
+            color: #323232;
+            padding: 4px;
+            font-size: 22px;
+            font-family: 'Noto Serif Display', serif;
+            position:relative;
+            /* cursor: default; */
+        }
+
+        img{
+        padding: 0px;
+        }
+
+        h1 {
+            font-size: 30px;
+            font-family: 'Kanit', sans-serif;
+            color: black;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: bolder;
+            font-family: 'Prompt:wght@600', sans-serif;
+            color: black;
+        }
+
+        h3 {
+            font-size: 16px;
+            font-family: 'Prompt', sans-serif;
+            color: black;
+        }
+        .center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+        }
+
+        .box {  
+        text-align: justify;
+        font-size: 16px;
+        font-family: 'Kanit', sans-serif;
+        border-radius: 25px;
+        background-color: whitesmoke;
+        padding: 30px;
+
+        }
+
+        .pop_up {
+        border-radius: 15px;
+        max-width: 700px;
+        margin-top: 70px;
+        margin-left: auto;
+        margin-right: auto;
+        }
+
+        .submit_button {
+        background-color:#FFF0BD ;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 10px;
+        padding: 4px;
+        }
+
+        .formbox{
+        text-align: justify;
+        font-size: 16px;
+        font-family: 'Kanit', sans-serif;
+        background-color: whitesmoke;
+        width: 1000px;
+        height: 600px;
+        border-radius: 25px;
+        padding: 40px;
+        padding: 40px;
+        }
+    </style>
+    <!-- <link rel="stylesheet" href="{% static 'style.css' %}"> -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/logo_green.ico' %}"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <style>
+    .nav-pills > li.active > a, .nav-pills > li.active > a:focus {
+        color: black;
+        background-color: #FFA809;
+    }
+    .nav-pills > li.active > a:hover {
+        background-color: #FFA809;
+        color:black;
+    }
+    </style>
+</head>
+<body style="background-color: #C0DDED;font-family: 'Prompt', sans-serif">
+    <div class="container py-5" style="margin-top: 0px;" >
+        <!-- For demo purpose -->
+        <!-- <div class="row mb-4">
+            <div class="col-lg-8 mx-auto text-center">
+                <h3 class="display-6">ข้อมูลผู้บาดเจ็บ</h3>
+            </div> -->
+        </div> <!-- End -->
+        <form action="/postformtest/"  method='post' >
+            {% csrf_token %}
+        <div class="row">
+            <div class="col-lg-6 mx-auto">
+                <div class="card ">
+                    <div class="card-header">
+                        <div class="">
+                            <h3 class="display-6" style="text-align: left;">ข้อมูลผู้บาดเจ็บ</h3>
+                            <h4 style="text-align: right;font-size: smaller;">วันที่ {{date}}</h4>
+                            <h4 style="text-align: right;font-size: smaller;">HN :         </h4>
+                            <!-- Credit card form tabs -->
+                            <ul role="tablist" class="nav bg-light rounded nav-fill mb-3 nav-tabs nav-pills" style="margin-bottom: 0px;">
+                                <li class="nav-item" > <a data-toggle="pill" href="#credit-card" class="nav-link active " style="color: black;"> <i ></i> ข้อมูลส่วนตัว </a> </li>
+                                <li class="nav-item"> <a data-toggle="pill" href="#paypal" class="nav-link "style="color: black;"> <i ></i> ข้อมูลการบาดเจ็บ </a> </li>
+                                <li class="nav-item"> <a data-toggle="pill" href="#net-banking" class="nav-link "style="color: black;"> <i></i> ข้อมูลแวดล้อม </a> </li>
+                            </ul>
+                        </div> <!-- End -->
+                        <!-- Credit card form content -->
+                        <div class="tab-content">
+                            <!-- credit card info-->
+                            <div id="credit-card" class="tab-pane fade show active pt-3">
+                                <form role="form" onsubmit="event.preventDefault()">
+                                    <div id="credit-card" class="tab-pane fade show active pt-3">
+                                        <form role="form" onsubmit="event.preventDefault()">
+                                            <div class="form-group"> 
+                                            <input type="number" min="0" name="age" placeholder="อายุ" required class="form-control "> </div>
+                                    <div class="form-group " > <select class="form-control" name="sex" required>
+                                        <option value="" selected disabled>เพศ</option>
+                                        <option value="0">ชาย</option>
+                                        <option value="1">หญิง</option>
+                                    </select> </div>
+                                    <div class="form-group "> <select class="form-control" name="nation" required>
+                                        <option value="" selected disabled>สัญชาติ</option>
+                                        <option value="0">ไทย</option>
+                                        <option value="1">ต่างชาติ</option>
+                                    </select> </div>
+                                    <div class="form-group "> <select class="form-control" name="alc" required>
+                                        <option value="" selected disabled>การดื่มแอลกอฮอล์</option>
+                                        <option value="0">ดื่ม</option>
+                                        <option value="1">ไม่ดื่ม</option>
+                                        <option value="2">ไม่ทราบ</option>
+                                    </select> </div>
+                                    <div class="form-group "> <select class="form-control" name="drug" required>
+                                        <option value="" selected disabled>การใช้สารเสพติด</option>
+                                        <option value="0">ใช้</option>
+                                        <option value="1">ไม่ใช้</option>
+                                        <option value="2">ไม่ทราบ</option>
+                                    </select> </div>
+                                </form>
+                            </div>
+                        </div> <!-- End -->
+                        <!-- Paypal info -->
+                        <div id="paypal" class="tab-pane fade pt-3">
+                            <div style="margin-left: 60px;background-size: 260px;background-repeat: no-repeat;background-image: url(https://i.ibb.co/VD6Tf2c/body.png);">
+                                <h3 style="margin-left: 360px;">บริเวณที่บาดเจ็บ</h3>
+                                <div class="form-check"  style="margin-left: 360px;font-size: 17px;margin-bottom: 19px;" >
+                                    <input class="form-check-input" type="hidden" id="headNo" name="head" value="0" ng-model="isFull" checked>
+                                    <input class="form-check-input" type="checkbox" id="head" name="head" value="1" ng-model="isFull">
+                                    <label class="form-check-label" for="head"> บาดเจ็บบริเวณ<strong>ศีรษะ</strong></label><br>
+                                    
+                                    <input type="hidden" id="neckNo" name="neck" value="0" ng-model="isFull" checked>
+                                    <input class="form-check-input" type="checkbox" id="neck" name="neck" value="1">
+                                    <label class="form-check-label" for="neck"> บาดเจ็บบริเวณ<strong>คอ</strong></label><br>
+                                    
+                                    <input type="hidden" id="thoraxNo" name="thorax" value="0" ng-model="isFull" checked>
+                                    <input class="form-check-input" type="checkbox" id="thorax" name="thorax" value="1">
+                                    <label class="form-check-label" for="thorax"> บาดเจ็บบริเวณ<strong>หน้าอก</strong></label><br>
+                                    
+                                    <input type="hidden" id="abdomenNo" name="abdomen" value="0" ng-model="isFull" checked>
+                                    <input class="form-check-input" type="checkbox" id="abdomen" name="abdomen" value="1">
+                                    <label class="form-check-label" for="abdomen"> บาดเจ็บบริเวณ<strong>ช่องท้อง</strong></label><br>
+                                    
+                                    <input type="hidden" id="upperNo" name="upper" value="0" ng-model="isFull" checked>
+                                    <input class="form-check-input" type="checkbox" id="upper" name="upper" value="1">
+                                    <label class="form-check-label" for="upper"> บาดเจ็บบริเวณ<strong>แขน</strong></label><br>
+                                    
+                                    <input type="hidden" id="pelvisNo" name="pelvis" value="0" ng-model="isFull" checked>
+                                    <input class="form-check-input" type="checkbox" id="pelvis" name="pelvis" value="1">
+                                    <label class="form-check-label" for="pelvis"> บาดเจ็บบริเวณ<strong>เชิงกราน</strong></label><br>
+                                    
+                                    <input type="hidden" id="lowerNo" name="lower" value="0" ng-model="isFull" checked>
+                                    <input class="form-check-input" type="checkbox" id="lower" name="lower" value="1">
+                                    <label class="form-check-label" for="lower"> บาดเจ็บบริเวณ<strong>ขา</strong></label><br>
+                                    
+                                    <input type="hidden" id="backNo" name="back" value="0" ng-model="isFull" checked>
+                                    <input class="form-check-input" type="checkbox" id="back" name="back" value="1">
+                                    <label class="form-check-label" for="back"> บาดเจ็บบริเวณ<strong>หลัง</strong></label><br>
+                                </div>
+                                <div class="form-check" style="margin-left: 60px;font-size: 17px;">
+                                    <input class="form-check-input" type="hidden" id="unconsciousNo" name="unconscious" value="0" ng-model="isFull" checked>
+                                    <input class="form-check-input" type="checkbox" id="unconscious" name="unconscious" value="1" ng-model="isFull">
+                                    <label class="form-check-label" for="unconscious">สลบ &nbsp;&nbsp;&nbsp;</label>
+                                    <input class="form-check-input" type="hidden" id="rescuerNo" name="rescuer" value="0" ng-model="isFull" checked>
+                                    <input class="form-check-input" type="checkbox" id="rescuer" name="rescuer" value="1" ng-model="isFull">
+                                    <label class="form-check-label" for="rescuer">มีการกู้ชีพ</label>
+                                </div>
+                            </div>
+                        </div> <!-- End -->
+                        <!-- bank transfer info -->
+                        <div id="net-banking" class="tab-pane fade pt-3">
+                            <div class="form-group ">
+                                </label> <div class="form-group " > <select class="form-control" name="refer_sender" required> 
+                                    <option value="" selected disabled>ผู้นำส่ง</option>
+                                    <option value="0">มาเอง</option>
+                                    <option value="1">ญาติ / พลเมืองดี</option>
+                                    <option value="2">ตำรวจ / จนท.สถานบริการสาธารณสุข</option>
+                                    <option value="3">มูลนิธิกู้ภัย / หน่วยกู้ชีพชุมชน</option>
+                                    <option value="4">หน่วย EMS โรงพยาบาล</option>
+                                    <option value="5">ไม่ทราบ</option>
+                                </select> </div>
+                                <div class="form-group "> <select class="form-control" name="person_type" required>
+                                    <option value="" selected disabled>สถานะผู้ขับขี่</option>
+                                    <option value="0">คนเดินถนน</option>
+                                    <option value="1">ผู้ขับขี่</option>
+                                    <option value="2">ผู้โดยสาร</option>
+                                    <option value="3">อื่น ๆ</option>
+                                </select> </div>
+                                <select required class="form-control" name="transport" onchange="transportChange(this)" >
+                                    <option value="" selected disabled>ประเภทของยานพาหนะ</option>
+                                    <option value="0">รถจักรยาน</option>
+                                    <option value="1">รถจักรยานยนต์</option>
+                                    <option value="2">รถจักรยานยนต์พ่วงข้าง</option>
+                                    <option value="3">รถยนต์</option>
+                                    <option value="4">รถบรรทุก</option>
+                                    <option value="5">รถโดยสาร</option>
+                                    <option value="6">อื่น ๆ</option>
+                                </select> </div>
+                                <div class="form-group d-none" id="transport_car"> <select class="form-control" name="belt" id="bletRe" required>
+                                    <option value="" selected disabled>การคาดเข็มขัดนิรภัย</option>
+                                    <option value="0">คาด</option>
+                                    <option value="1">ไม่คาด</option>
+                                    <option value="2">ไม่ทราบ</option>
+                                </select> </div>
+                                <div class="form-group d-none" id="transport_mtc"> <select class="form-control" name="helmet" id="helmetRe" required>
+                                    <option value="" selected disabled>การสวมหมวกนิรภัย</option>
+                                    <option value="0">สวม</option>
+                                    <option value="1">ไม่สวม</option>
+                                    <option value="2">ไม่ทราบ</option>
+                                </select> </div>
+                                <script>
+                                    function transportChange (e){
+                                        var currentTransport = e.value
+                                        if (['0','1','2'].includes(currentTransport)){
+                                            document.getElementById("transport_mtc").classList.remove("d-none")
+                                            document.getElementById("transport_car").classList.add("d-none")
+                                            $('#bletRe').prop('required',false);
+                                        }
+                                        else if (['3','4','5'].includes(currentTransport)){
+                                            document.getElementById("transport_car").classList.remove("d-none")
+                                            document.getElementById("transport_mtc").classList.add("d-none")
+                                            $('#helmetRe').prop('required',false);
+                                        }
+                                            else {
+                                            document.getElementById("transport_car").classList.remove("d-none")
+                                            document.getElementById("transport_mtc").classList.remove("d-none")
+                                        }
+                                        // console.log(currentTransport)
+                                    }
+                                </script>                                
+                            </form>
+                            
+                            </div>
+    
+                        </div> <!-- End -->
+                    
+                    </div>
+                    <button class="btn btn-primary "  style="background-color: #627CAD;color: white;border: 0ch;height: 45px;" type="submit" name="xgb" value="Submit">ยืนยันข้อมูล</button>
+                </div>
+                
+            </div>
+            </form>
+        </div>
+
+</body>
+{% endblock%}

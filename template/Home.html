@@ -1,0 +1,287 @@
+{%extends 'layout2.html' %} 
+{% block content%}
+<!DOCTYPE html>
+<html lang="th">
+    <head>           
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--ดูดีทุกขนาดจอ-->
+        <meta name="description" content="...information about the web page">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        {% load static %}
+        <!-- <link rel="stylesheet" href="{% static 'style.css' %}"> -->
+        <style>        
+          @import url('https://fonts.googleapis.com/css?family=Kanit|Prompt:wght@600|Prompt|=Noto+Serif+Display:wght@900');
+      
+          html,body {
+              font-family: 'Kanit', sans-serif;
+              background-color: #C0DDED;
+              text-align: center;
+          }
+          /* Hide the browser's default checkbox */
+          .container input {
+          position: absolute;
+          opacity: 0;
+          cursor: pointer;
+          height: 0;
+          width: 0;
+          }
+      
+          /* Create a custom checkbox */
+          .checkmark {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 25px;
+          width: 25px;
+          background-color: #eee;
+          }
+      
+          /* On mouse-over, add a grey background color */
+          .container:hover input ~ .checkmark {
+          background-color: #ccc;
+          }
+      
+          /* When the checkbox is checked, add a blue background */
+          .container input:checked ~ .checkmark {
+          background-color: #2196F3;
+          }
+      
+          /* Create the checkmark/indicator (hidden when not checked) */
+          .checkmark:after {
+          content: "";
+          position: absolute;
+          display: none;
+          }
+      
+          /* Show the checkmark when checked */
+          .container input:checked ~ .checkmark:after {
+          display: block;
+          }
+      
+          /* Style the checkmark/indicator */
+          .container .checkmark:after {
+          left: 9px;
+          top: 5px;
+          width: 5px;
+          height: 10px;
+          border: solid white;
+          border-width: 0 3px 3px 0;
+          -webkit-transform: rotate(45deg);
+          -ms-transform: rotate(45deg);
+          transform: rotate(45deg);
+          }
+      
+          .menu_item{
+          color: black;
+          font-family: 'Prompt', sans-serif;
+          display: inline-block;
+          border-radius: 20px;
+          padding: 9px;
+          text-decoration: none;
+          margin-right: 8px;
+          }
+      
+          .logotext{
+              color: #323232;
+              padding: 4px;
+              font-size: 22px;
+              font-family: 'Noto Serif Display', serif;
+              position:relative;
+              /* cursor: default; */
+          }
+      
+          img{
+          padding: 0px;
+          }
+      
+          h1 {
+              font-size: 30px;
+              font-family: 'Kanit', sans-serif;
+              color: black;
+          }
+      
+          h2 {
+              font-size: 20px;
+              font-weight: bolder;
+              font-family: 'Prompt:wght@600', sans-serif;
+              color: black;
+          }
+      
+          h3 {
+              font-size: 16px;
+              font-family: 'Prompt', sans-serif;
+              color: black;
+          }
+          .center {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 50%;
+          }
+      
+          .box {  
+          text-align: justify;
+          font-size: 16px;
+          font-family: 'Kanit', sans-serif;
+          border-radius: 25px;
+          background-color: whitesmoke;
+          padding: 30px;
+      
+          }
+      
+          .pop_up {
+          border-radius: 15px;
+          max-width: 700px;
+          margin-top: 70px;
+          margin-left: auto;
+          margin-right: auto;
+          }
+      
+          .submit_button {
+          background-color:#FFF0BD ;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          border-radius: 10px;
+          padding: 4px;
+          }
+      
+          .formbox{
+          text-align: justify;
+          font-size: 16px;
+          font-family: 'Kanit', sans-serif;
+          background-color: whitesmoke;
+          width: 1000px;
+          height: 600px;
+          border-radius: 25px;
+          padding: 40px;
+          padding: 40px;
+          }
+      </style>
+    </head>
+    <body style="background-color: #C0DDED">
+        <div>    
+            <!-- <h3>{{date}}</h3> -->
+            <h2 style="font-family: 'Kanit', sans-serif; text-align: center; margin-top: 60px; color: #2D2D2D; font-size: 23px; " >เว็บแอปพลิเคชันสำหรับทำนายความรุนแรงของผู้บาดเจ็บจากอุบัติเหตุทางถนน</h2>
+            <h4 style="font-family: 'Kanit', sans-serif; text-align: center; color:#2D2D2D;font-size: 16px;" >DEMO version</h4>
+            <img src="https://i.ibb.co/svBF2MH/circlewhite-new.png" alt="background image" style="max-width: 30%; height: auto;">
+        </div>
+        <a class="btn btn-primary" style='border-style: none; background-color: white;color: black; width: 300px; height: 50px; font-size: larger; text-align: center; padding: 10px 'href="/form" role="button">เริ่มต้นการทำนาย</a>
+        
+        <footer class="text-right fixed-bottom">
+            <div class="text-right p-2" style="background-color: rgba(0, 0, 0, 0.05);">
+                © 2022 Copyright:
+                <a type="button" class="text-reset fw-bold" data-toggle="modal" data-target="#ReportProblem">รายงานปัญหา</a>
+              </div>
+              <!-- Copyright -->
+          </footer>
+               <!-- Modal -->
+            <div class="modal fade" id="ReportProblem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">แจ้งปัญหาการใช้งาน</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                    <textarea class="form-control" id="ReportProblemText" rows="3"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                    <button id="btnadd" type="button" class="btn btn-primary" onclick="addReport()">บันทึก</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+            <script id="MainScript">
+                // Initialize Firebase
+                var config = {
+                    apiKey: "AIzaSyD3qcCh1MxUoiqk7dld7hLuGVmx--ri3hY",
+                    authDomain: "forcrashdemo.firebaseapp.com",
+                    databaseURL: "https://forcrashdemo-default-rtdb.firebaseio.com",
+                    projectId: "forcrashdemo",
+                    storageBucket: "forcrashdemo.appspot.com",
+                    messagingSenderId: "G-FJMZLMD0ZY",
+                    appId: "1:216908476609:web:872afce2e6255e1e1fe440",
+                };
+                firebase.initializeApp(config);
+                var Email = "{{email}}"
+                var memberKey = "{{memberKey}}"
+                
+                var ReportOld 
+                var name
+                var Lastname
+                var Institute
+                
+                var Modname = document.getElementById('Modname');
+                var Modlastname = document.getElementById('ModLastname');
+                var ModInstitute = document.getElementById('ModInst');
+                var ReportProblem = document.getElementById('ReportProblemText');
+                var BTNadd = document.getelementById('btnadd');
+                
+                function finddata(){
+                  firebase.database().ref('Member').orderByChild("email").equalTo(Email).once('value',
+                  function (AllRecords){
+                    AllRecords.forEach(
+                        function(CurrentRecord){
+                          ReportOld = CurrentRecord.val().Report;
+                          name = CurrentRecord.val().firstname;
+                          Lastname = CurrentRecord.val().lastname;
+                          Institute = CurrentRecord.val().institute;
+                        }
+                      );
+                    });
+                  }
+                window.onload = finddata;
+                function FillboxProfile(){
+                  Modname.value = name
+                  Modlastname.value = Lastname
+                  ModInstitute.value = Institute
+                }
+                function addReport(){
+                    firebase.database().ref("Member/"+memberKey).update({
+                      Report: ReportOld+" "+ReportProblem.value
+                    },
+        
+                    (error) =>{
+                        if(error){
+                            alert("Report was not added, there was some problem");}
+                        else{
+                            alert("Report was added");
+                            $("ReportProblem").modal('hide');
+                       }
+                    }
+                  ) 
+                }
+                function updateprofile(){
+                    firebase.database().ref("Member/"+memberKey).update({
+                      firstname: Modname.value,
+                      lastname: Modlastname.value, 
+                      institute: ModInstitute.value
+                    },
+        
+                    (error) =>{
+                        if(error){
+                            alert("Profile was not updated, there was some problem");}
+                        else{
+                            alert("Profile was updated");
+                            $("ReportProblem").modal('hide');
+                          }
+                    }
+                  ) 
+                }
+              </script>
+    </body>
+</html>
+{% endblock%}

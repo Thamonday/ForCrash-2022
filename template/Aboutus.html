@@ -1,0 +1,58 @@
+
+{%extends 'layout1.html' %} 
+{% block content%}
+{% load static %}
+<!DOCTYPE html>
+<head>           
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--ดูดีทุกขนาดจอ-->
+    <meta name="description" content="...information about the web page">
+    <title>FORCRASH WebApp</title>
+    <style>
+        
+        @import url('https://fonts.googleapis.com/css?family=Kanit|Prompt');
+        body {
+            background-color: white;
+            background-image: url("{% static 'images/aboutus.jpg' %}");
+            background-repeat: no-repeat;
+            background-size: 900px;
+            background-position: right;
+            /* background-attachment: fixed; */
+            }
+        h2   {
+            font-size: 20px;
+            font-family: 'Prompt', sans-serif;
+            color: black;
+            }
+        h3  {
+            font-size: 18px;
+            font-family: 'Prompt', sans-serif;
+            color: black;
+            }
+        .aboutus{
+            border-radius: 20px;
+            text-align: center;
+            color: black;
+            width: 500px;
+            height: 140px;
+            padding: 25px;
+            margin-left: 100px;
+            margin-top: 200px;
+        }
+    </style>
+</head>   
+    <body>
+        <!-- <div>
+            <img src="{% static 'images/aboutus.jpg' %}" alt="background image" style="max-width: 40%; height: auto;">
+        </div> -->
+        <div class='aboutus'>
+            <h2>เว็บแอปพลิเคชันสำหรับการวิเคราะห์ความรุนแรงของผู้บาดเจ็บจากอุบัติเหตุบนท้องถนน</h2>
+            <h3>ทำการวิเคราะห์ข้อมูลด้วยโมเดล Machine learning เพื่อนำผลการทำนาย 
+                มาใช้ร่วมกับกระบวนการประเมินอาการและคัดกรองผู้ประสบอุบัติเหตุทางถนน
+                ผู้พัฒนาหวังเป็นอย่างยิ่งว่าเว็บแอปพลิเคชันสำหรับทำนายความรุนแรงของ 
+                ผู้ประสบอุบัติเหตุทางถนนจะสามารถเป็นตัวช่วยเสริมในการประเมินความรุนแรง 
+                และวางแผนแนวการรักษาของบุคลากรทางการแพทย์อย่างถูกต้องและรวดเร็วมากยิ่งขึ้น</h3>
+        </div>
+    </body>
+</html>
+{% endblock%}

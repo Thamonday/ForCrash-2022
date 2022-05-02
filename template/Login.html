@@ -1,0 +1,113 @@
+
+{%extends 'layout1.html' %} 
+{% block content%}
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Kanit|Prompt');
+    body {
+        background-color: #C0DDED;
+        background-repeat: no-repeat;
+        background-size: 1800px 740px;
+        background-position: top;
+        background-attachment: fixed;
+        }
+    h2   {
+        font-size: 25px;
+        font-family: 'Kanit', sans-serif;
+        color: black;
+        }      
+    h3   {
+        font-size: 16px;
+        font-family: 'Kanit', sans-serif;
+        color: white;
+        }  
+    .center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
+
+    .box {  
+        font-size: 16px;
+        font-family: 'Kanit', sans-serif;
+        border-radius: 25px;
+        background-color: whitesmoke;
+        padding: 20px;
+        margin-top: 40px;
+    }
+
+    .box_loyout {
+        border-radius: 15px;
+        max-width: 700px;
+        margin: auto;
+    }
+    .submit_button {
+        background-color:#627CAD ;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 10px;
+        width: 320px;
+        color: white;
+        padding: 4px;
+    }
+    .submit_button2 {
+        background-color:#FB6F4E ;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 10px;
+        width: 320px;
+        color: white;
+        padding: 4px;
+    }
+</style>
+
+<body>
+
+{% if messages %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Kanit; text-align: center;">
+    {% for message in messages %}
+    <strong>เข้าสู่ระบบไม่เสำเร็จ!  </strong>{{message}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    {% endfor%}
+</div>
+{%endif%}
+
+<form class ='box_loyout' action='/Home/' method='post'>
+    {% csrf_token %} 
+    <div class='form-group mx-3'>
+        <div class="box">
+            {% load static %}
+            <img src="https://i.ibb.co/ZHPvTp7/emergencyphone-min.png" class="center" style="max-width: 30%; height: auto; margin-top: 0px;">
+            <h2 style="text-align: center; font-size: 19px;" >เว็บแอปพลิเคชันสำหรับทำนายความรุนแรง</h2>
+            <h2 style="text-align: center; font-size: 18px; margin-bottom: 10px;" >ของผู้บาดเจ็บจากอุบัติเหตุทางถนน</h2>
+            <form class="center" action="https://httpbin.org/post" method="post">
+                <p>
+                    <label class="center" for="input_email">อีเมลล์ (Email)</label>
+                </p>
+                <p>
+                    <input class="center" id="input_email" type="email" name="Email">
+                </p>
+                <p>
+                    <label class="center" for="input_password">รหัสผ่าน (Password)</label>
+                </p>
+                <p>
+                    <input class="center" id="input_password" type="password" name="Password">
+                    <a class="center"style = "text-decoration:none; color:#3583EB ; font-size: 14px;" href="/register">ลืมรหัสผ่าน</a>   
+                </p>
+                <p>
+                    <button class="submit_button" type="submit">เข้าสู่ระบบ</button>
+                </p>
+                <p>
+                    <a class="submit_button2" style="text-align: center;" href="/register" role="button">ลงทะเบียน</a>
+                    <!-- <button class="submit_button2" href="/register">ลงทะเบียน</button> -->
+                </p>                
+            </form>
+
+        </div>
+    </div>
+</body>
+{% endblock%}

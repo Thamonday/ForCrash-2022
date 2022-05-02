@@ -1,0 +1,66 @@
+{%extends 'layout2.html' %} 
+{% block content%}
+<!DOCTYPE html>
+<head>           
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--ดูดีทุกขนาดจอ-->
+    <meta name="description" content="...information about the web page">
+    <title>FORCRASH WebApp</title>
+    {% load static %}
+    <!-- <link rel="stylesheet" href="{% static 'style.css' %}"> -->
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Kanit|Prompt');
+        body {
+            background-color: #C0DDED;
+            }
+        h2   {
+            font-size: 20px;
+            font-family: 'Prompt', sans-serif;
+            color: black;
+            }
+        h3  {
+            font-size: 18px;
+            font-family: 'Prompt', sans-serif;
+            color: black;
+            }
+        .box{
+            text-align: justify;
+            font-size: 16px;
+            font-family: 'Kanit', sans-serif;
+            border-radius: 25px;
+            margin: 30px;
+            background-color: white;
+            height: 630px;
+            padding: 30px;
+            /* background-image: url("{% static 'images/result.jpg' %}"); */
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position:  760px 100px;
+        }
+        .text_left{
+            border-radius: 20px;
+            text-align: center;
+            color: black;
+            width: 500px;
+            height: 140px;
+            padding: 25px;
+            margin-left: 450px;
+            margin-top: 50px;
+        }
+    </style>
+</head>   
+    <body>
+        <div class='box'>
+            <p class="text_left">
+            <h1>ผลการทำนาย</h1>
+            <!-- <img src="{% static 'images/urgent.png' %}" alt="background image" style="max-width: 80%; height: auto;"> -->
+            <h2>{{finalResult}}</h2>
+            <h2>{{result}}</h2>
+            <br>
+            <h3>ผู้ป่วยฉุกเฉินเร่งด่วน ได้แก่ บุคคลที่ได้รับบาดเจ็บหรือมีอาการป่วยซึ่งมีภาวะเฉียบพลันมาก หรือเจ็บปวดรุนแรงอันจำเป็นต้องได้รับปฏิบัติการแพทย์อย่างรีบด่วน มิฉะนั้นจะทำให้อาการบาดเจ็บหรืออาการป่วยของผู้ป่วยฉุกเฉินนั้นรุนแรงขึ้น
+                หรือเกิดภาวะแทรกซ้อนขึ้น ซึ่งส่งผลให้เสียชีวิตหรือพิการในระยะต่อมาได้</h3>
+            </p>
+        </div>
+    </body>
+</html>
+{% endblock%}
