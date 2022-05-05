@@ -5,6 +5,8 @@ from time import time
 from unicodedata import name
 from django.shortcuts import redirect, render
 import pyrebase
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import login, logout
 from django.contrib import auth as authe
 import pickle
 from django.conf import settings
@@ -38,14 +40,38 @@ def index(request):
     if loginactive == 0: return render(request,'Login.html')
     elif loginactive == 1 : return render(request,'Home.html',{'name':name,'email':email_G,'memberKey':memberKey})
 
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('Email')
+        password = request.POST.get('Password')
+        form = AuthenticationForm(username=username, password=password)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('Home.html')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'login.html', {'form': form})
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('book:index')
+    else:
+        form = UserCreationForm()
+    return render(request, 'Register.html', {'form': form})
+
+
 def login(request):
     return render(request,'login.html')
 
 def logout(request):
-    authe.logout(request)
-    global name
-    name = []
-    return render(request,'Login.html')
+    if request.method == 'POST':
+        logout(request)
+        return redirect('login.html')
 
 def register(request):
     return render(request,'Register.html')

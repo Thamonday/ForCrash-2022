@@ -19,11 +19,11 @@ from ForCarsh_DEMO import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.index),    
+    path('',views.login_view),    
     path('index/',views.index),  
-    path('login/',views.login),
+    path('login/',views.login_view),
     path('logout/',views.logout),
-    path('register/',views.register),
+    path('register/',views.signup_view),
     path('aboutus/',views.aboutus),
     path('instruction/',views.howto),
     path('history/',views.history),
