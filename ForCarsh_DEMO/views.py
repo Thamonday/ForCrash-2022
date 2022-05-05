@@ -65,13 +65,11 @@ def signup_view(request):
     return render(request, 'Register.html', {'form': form})
 
 
-def login(request):
-    return render(request,'login.html')
-
-def logout(request):
-    if request.method == 'POST':
-        logout(request)
-        return redirect('login.html')
+def logout_view(request):
+    logout(request)
+    # return redirect('Login.html')
+    return render(request, 'Login.html')
+    # return redirect('Login.html')
 
 def register(request):
     return render(request,'Register.html')
