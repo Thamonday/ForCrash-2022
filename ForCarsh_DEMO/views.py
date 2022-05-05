@@ -6,7 +6,7 @@ from unicodedata import name
 from django.shortcuts import redirect, render
 import pyrebase
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout,authenticate
 from django.contrib import auth as authe
 import pickle
 from django.conf import settings
@@ -16,6 +16,7 @@ from pathlib import Path
 import pandas as pd
 from django.contrib import messages
 from datetime import datetime
+from django.contrib.auth.models import User
 
 firebaseConfig={ 'apiKey': "AIzaSyD3qcCh1MxUoiqk7dld7hLuGVmx--ri3hY",
   'authDomain': "forcrashdemo.firebaseapp.com",
@@ -33,12 +34,9 @@ database=firebase.database()
 
 date_now = datetime.now()
 loginactive = 0
-name = []
+Name = []
 email_G = []
 memberKey = []
-def index(request): 
-    if loginactive == 0: return render(request,'Login.html')
-    elif loginactive == 1 : return render(request,'Home.html',{'name':name,'email':email_G,'memberKey':memberKey})
 
 def login_view(request):
     if request.method == 'POST':
@@ -55,21 +53,21 @@ def login_view(request):
 
 def signup_view(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        form = UserCreationForm(username=email, password=password)
         if form.is_valid():
             user = form.save()
             login(request, user)
             return redirect('book:index')
     else:
         form = UserCreationForm()
-    return render(request, 'Register.html', {'form': form})
+    return render(request, 'Register.html')
 
 
 def logout_view(request):
     logout(request)
-    # return redirect('Login.html')
     return render(request, 'Login.html')
-    # return redirect('Login.html')
 
 def register(request):
     return render(request,'Register.html')
@@ -91,18 +89,10 @@ def postlogin(request):
     email = request.POST.get('Email')
     password = request.POST.get('Password')
     try:
-        user = auth.sign_in_with_email_and_password(email,password)
-        global loginactive
-        loginactive = 1
-        members=database.child('Member').get()
-        for person in members.each():
-            if person.val()['email']==email:
-                member_name = database.child('Member').child(person.key()).child('firstname').get().val()
-                global name , email_G ,memberKey
-                name = member_name
-                email_G = email
-                memberKey = person.key()
-        return render(request,'Home.html',{'name':member_name,'date':date_now,'email':email_G,'memberKey':memberKey})
+        # user = auth.sign_in_with_email_and_password(email,password)
+        user = authenticate(request, username=email, password=password)
+        login(request, user)
+        return render(request,'Home.html')
     except:
         messages.error(request, "อีเมลหรือรหัสผ่านให้ถูกต้อง")
         return redirect('/login')
@@ -121,6 +111,9 @@ def postregister(request):
     data = {'firstname':firstname,'lastname':lastname,'institute':institute,'email':email,'password':password}
     database.child('Member').push(data)#.setValue("setting")
     # database.child('Member').child(memberId).setValue(email)
+    user = User.objects.create_user(username=email,
+                                 email=firstname,
+                                 password=password)
     return render(request,'Login.html')
 
 def postQuestionForm(request):

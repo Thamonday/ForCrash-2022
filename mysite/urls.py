@@ -20,7 +20,6 @@ from ForCarsh_DEMO import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.login_view),    
-    path('index/',views.index),  
     path('login/',views.login_view),
     path('logout/',views.logout_view),
     path('register/',views.signup_view),
