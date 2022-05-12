@@ -11,12 +11,13 @@ from django.contrib import auth as authe
 import pickle
 from django.conf import settings
 import xgboost as xgb
-import os
-from pathlib import Path
 import pandas as pd
 from django.contrib import messages
 from datetime import datetime
 from django.contrib.auth.models import User
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+
 
 firebaseConfig={ 'apiKey': "AIzaSyD3qcCh1MxUoiqk7dld7hLuGVmx--ri3hY",
   'authDomain': "forcrashdemo.firebaseapp.com",
@@ -38,36 +39,16 @@ Name = []
 email_G = []
 memberKey = []
 
+# @csrf_exempt
 def login_view(request):
-    if request.method == 'POST':
-        username = request.POST.get('Email')
-        password = request.POST.get('Password')
-        form = AuthenticationForm(username=username, password=password)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            return redirect('Home.html',{'name':name,'email':email_G,'memberKey':memberKey})
-    else:
-        form = AuthenticationForm()
-    return render(request, 'Login.html', {'form': form})
-
-def signup_view(request):
-    if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        form = UserCreationForm(username=email, password=password)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('book:index')
-    else:
-        form = UserCreationForm()
-    return render(request, 'Register.html')
-
+    return render(request, 'Login.html')
 
 def logout_view(request):
     logout(request)
     return render(request, 'Login.html')
+
+def home(request):
+    return render(request, 'Home.html')
 
 def register(request):
     return render(request,'Register.html')
@@ -80,11 +61,14 @@ def howto(request):
 
 def history(request):
     global email_G
-    return render(request,'History.html',{'name':name,'email':email_G,'memberKey':memberKey})
+    return render(request,'History.html')
 
 def QuestionForm(request):
-    return render(request,'QuestionForm.html',{'name':name,'date':date_now,'email':email_G})
+    user = request.user 
+    print(type(str(user)),str(user))
+    return render(request,'QuestionForm.html',{'date':date_now})
 
+@method_decorator(csrf_exempt)
 def postlogin(request):
     email = request.POST.get('Email')
     password = request.POST.get('Password')
@@ -102,19 +86,19 @@ def postregister(request):
     password = request.POST.get('password')
     try:
         user = auth.create_user_with_email_and_password(email, password)
+        firstname=request.POST.get('firstname')
+        lastname=request.POST.get('lastname')
+        institute=request.POST.get('institute')
+        data = {'firstname':firstname,'lastname':lastname,'institute':institute,'email':email,'password':password,'report':''}
+        database.child('Member').push(data)
+        user = User.objects.create_user(username=email,
+                                 email=firstname,
+                                 password=password)
+        messages.success(request, 'ลงทะเบียนสำเร็จ')
+        return render(request,'Login.html')
     except: 
         messages.warning(request,"อีเมลนี้มีผู้ใช้แล้ว")
         return redirect('/register')
-    firstname=request.POST.get('firstname')
-    lastname=request.POST.get('lastname')
-    institute=request.POST.get('institute')
-    data = {'firstname':firstname,'lastname':lastname,'institute':institute,'email':email,'password':password}
-    database.child('Member').push(data)#.setValue("setting")
-    # database.child('Member').child(memberId).setValue(email)
-    user = User.objects.create_user(username=email,
-                                 email=firstname,
-                                 password=password)
-    return render(request,'Login.html')
 
 def postQuestionForm(request):
     booster = xgb.Booster()
@@ -171,9 +155,9 @@ def postQuestionForm(request):
     transport=request.POST.get('transport')
     person_type=request.POST.get('person_type')
     refer_sender=request.POST.get('refer_sender')
+    HN = request.POST.get('HN')
+    print(HN)
 
-    global email_G
-   
     data = {'Sex':sex,'Age':age,'nationality':nation,'transport':transport,'acc_person_type':person_type,
         'refer_sender':refer_sender,'alcohol':alc,'drug':drug,'belt':belt,'helmet':helmet,
         'day_of_week':day_of_week,'acc_month':acc_month,'acc_time':acc_time,'abdomen':abdomen,
@@ -188,12 +172,13 @@ def postQuestionForm(request):
     if y_pred == 'Severe' :
         y_pred = clf2.predict(df)
     df['result']=y_pred
-    df['email']= email_G
+    user = request.user 
+    df['email']= str(user) 
     
     time = date_now.strftime("%m/%d/%Y, %H:%M:%S")
     print(type(time),time)
     df['datetime']= time
-    df['HN']= 'ยังไม่มีการแก้ไข'
+    df['HN']= HN
     df['unconscious']= request.POST.get('unconscious')
     rescuer = request.POST.get('rescuer')
     df['rescuer']= rescuer
@@ -216,5 +201,9 @@ def postQuestionForm(request):
         finalResult = 'ฉุกเฉินวิกฤติ'
     elif  y_pred == 'Resuscitation':
         finalResult = 'ไม่มีการตอบสนอง'
-
-    return render(request,'Result.html',{'result':y_pred,'finalResult':finalResult,'name':name,'email':email_G})
+    ts = str(y_pred)
+    print(type(ts),ts)
+    ts = ts.replace('[', '')
+    ts = ts.replace(']', '')
+    ts = ts.replace('\'', '')
+    return render(request,'Result.html',{'result':ts,'finalResult':finalResult})

@@ -175,7 +175,7 @@
     </style>
 </head>
 <body style="background-color: #C0DDED;font-family: 'Prompt', sans-serif">
-    <div class="container py-5" style="margin-top: 0px;" >
+    <div class="container py-4" style="margin-top: 10px;" >
         <!-- For demo purpose -->
         <!-- <div class="row mb-4">
             <div class="col-lg-8 mx-auto text-center">
@@ -189,9 +189,20 @@
                 <div class="card ">
                     <div class="card-header">
                         <div class="">
-                            <h3 class="display-6" style="text-align: left;">ข้อมูลผู้บาดเจ็บ</h3>
-                            <h4 style="text-align: right;font-size: smaller;">วันที่ {{date}}</h4>
-                            <h4 style="text-align: right;font-size: smaller;">HN :         </h4>
+                            <h3 class="display-6" style="text-align: left;margin-top: 10px;">ข้อมูลผู้บาดเจ็บ</h3>
+                            <h4 style="text-align: right;font-size: 14px;">วันที่ {{date}}</h4>
+                            <!-- <h4 v>HN :         </h4><input id="input_firstname" class="form-control " type="text" name="firstname"> -->
+                            <!-- <label  style="text-align: right;font-size: smaller;" for="fname">HN :</label><input type="text" id="fname" class="form-control mb-2 mr-sm-2" name="fname"><br><br> -->
+                                <div class="row d-flex flex-row-reverse"  style="font-size: 7px;">
+                                    <div class="form-group col-sm-3" >
+                                        <div class="input-group mb-2 mr-sm-2">
+                                            <div class="input-group-prepend">
+                                              <div class="input-group-text">HN : </div>
+                                            </div>
+                                            <input type="text" class="form-control" id="HN" name="HN" >
+                                          </div>
+                                    </div>
+                            </div>
                             <!-- Credit card form tabs -->
                             <ul role="tablist" class="nav bg-light rounded nav-fill mb-3 nav-tabs nav-pills" style="margin-bottom: 0px;">
                                 <li class="nav-item" > <a data-toggle="pill" href="#credit-card" class="nav-link active " style="color: black;"> <i ></i> ข้อมูลส่วนตัว </a> </li>

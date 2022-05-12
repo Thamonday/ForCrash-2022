@@ -167,6 +167,8 @@
         </style>
     </head>
     <body>
+        {% if user.is_authenticated %}
+        {% csrf_token %}
         <div class="container">
         <h1 style="margin-top: 30px;">ประวัติการทำนาย</h1>
         <!-- <a>{{email}}</a> -->
@@ -235,7 +237,8 @@
                 appId: "1:216908476609:web:872afce2e6255e1e1fe440",
             };
             firebase.initializeApp(config);
-            var Email = "{{email}}"
+            var Email = " {{ request.user.username }}"
+            Email = Email.trim()
             var keyf = [];
             // document.write(Email);
             var stdNo 
@@ -346,6 +349,7 @@
                                             
                 
         </script>
+        {% endif %}
     </body>
 </html>
 {% endblock%}

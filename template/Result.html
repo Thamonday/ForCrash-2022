@@ -9,7 +9,7 @@
     {% load static %}
     <!-- <link rel="stylesheet" href="{% static 'style.css' %}"> -->
     <style>
-        @import url('https://fonts.googleapis.com/css?family=Kanit|Prompt');
+               @import url('https://fonts.googleapis.com/css?family=Kanit|Prompt');
         body {
             background-color: #C0DDED;
             }
@@ -47,20 +47,64 @@
             margin-left: 450px;
             margin-top: 50px;
         }
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+        }
     </style>
 </head>   
+<!-- id="display_here" -->
     <body>
         <div class='box'>
-            <p class="text_left">
-            <h1>ผลการทำนาย</h1>
-            <!-- <img src="{% static 'images/urgent.png' %}" alt="background image" style="max-width: 80%; height: auto;"> -->
-            <h2>{{finalResult}}</h2>
-            <h2>{{result}}</h2>
             <br>
-            <h3>ผู้ป่วยฉุกเฉินเร่งด่วน ได้แก่ บุคคลที่ได้รับบาดเจ็บหรือมีอาการป่วยซึ่งมีภาวะเฉียบพลันมาก หรือเจ็บปวดรุนแรงอันจำเป็นต้องได้รับปฏิบัติการแพทย์อย่างรีบด่วน มิฉะนั้นจะทำให้อาการบาดเจ็บหรืออาการป่วยของผู้ป่วยฉุกเฉินนั้นรุนแรงขึ้น
-                หรือเกิดภาวะแทรกซ้อนขึ้น ซึ่งส่งผลให้เสียชีวิตหรือพิการในระยะต่อมาได้</h3>
             </p>
+            <center>
+                <h1 style="margin-bottom: 0cm;">ผลการทำนาย</h1>
+                <p id="display_here"></p>
+            </center>
+            
+        <footer class="text-right fixed-bottom">
+            <div class="text-right p-1" style="background-color: rgba(0, 0, 0, 0.05);font-family: 'Prompt', sans-serif;">
+                Confirm result:
+                <a type="button" class="text-reset fw-bold" data-toggle="modal" data-target="#ReportProblem">{{result}}</a>
+              </div>
+              <!-- Copyright -->
+          </footer>
         </div>
+        <script>
+                 $(document).ready(function () {
+                    createDoll();
+                });
+                function createDoll(userChoice) {
+                    var result = "{{result}}"
+                    // document.write(typeof(result),result,' then ',result == 'Emergency');
+
+                    var output = document.getElementById("display_here");
+                    // var description = document.getElementById("Myid");
+                    if ( result == 'Non-Urgent'){
+                        output.innerHTML = '<img src="https://i.ibb.co/4N2phxP/non-urg.png" alt="Non-Urgency" style="max-width: 60%; height: auto; margin-top: 0;">';
+                        // description.innerHTML ='&ensp;ผู้ป่วยที่มีภาวะเจ็บป่วยไม่ฉุกเฉิน&nbsp;ได้แก่&nbsp;ผู้ป่วยซึ่งมารับบริการสารารณสุขหรือบริการอื่น โดยไม่จำเป็นต้องใช้ทรัพยากร รอได้มากกว่า 1 ชั่วโมง'
+                    }
+                    else if (result == 'Semi-Urgent'){
+                        output.innerHTML = '<img src="https://i.ibb.co/vxYnGgF/semi-urg.png" alt="background image" style="max-width: 60%; height: auto; margin-top: 0;">';
+                        // description.innerHTML ='&ensp;ผู้ป่วยที่มีภาวะเจ็บป่วยเร่งด่วนทั่วไป&nbsp;ได้แก่&nbsp;ผู้ป่วยที่เจ็บป่วยแต่ไม่ใช่ผู้ป่วยฉุกเฉิน<br>ซึ่งอาจรอรับบริการได้โดยไม่ก่อให้เกิดอาการที่รุนแรงขึ้นหรือภาวะแทรกซ้อนตามมา<br>รอรับบริการได้ 1 ชั่วโมง'
+                    }
+                    else if (result == 'Urgent'){
+                        output.innerHTML = '<img src="https://i.ibb.co/TWwNvxP/urg.png" alt="background image"  style="max-width: 60%; height: auto; margin-top: 0;">';
+                        // description.innerHTML ='&ensp;ผู้ป่วยที่มีภาวะเจ็บป่วยเร่งด่วนที่อาจก่อให้เกิดอันตรายต่อชีวิตและอวัยวะผู้ป่วยที่ได้รับบาดเจ็บหรือมีอาการป่วยซึ่งมีภาวะเฉียบพลันไม่รุนแรงอาจรอรับปฏิบัติการแพทย์ได้ในช่วงระยะเวลาหนึ่งแต่จำเป็นต้องใช้ทรัพยากรและหากปล่อยไว้เกินเวลาอันสมควรแล้วจะทำให้การบาดเจ็บหรืออาการป่วยของผู้ป่วยฉุกเฉินนั้นรุนแรงขึ้นหรือเกิดภาวะแทรกซ้อนขึ้นได้'
+                    }
+                    else if (result == 'Emergency'){
+                        output.innerHTML = '<img src="https://i.ibb.co/xj3FjdJ/emer.png" alt="background image" style="max-width: 47%; height: auto; margin-top: 0;">';
+                        // description.innerHTML ='&ensp;ผู้ป่วยที่มีภาวะเจ็บป่วยรุนแรงที่ต้องให้การช่วยเหลืออย่างเร่งด่วน ผู้ป่วยที่ได้รับบาดเจ็บหรือมีอาการป่วยซึ่งมีภาวะเฉียบพลันมาก&nbsp;หรือเจ็บปวดรุนแรงอันอาจจำเป็นต้องได้รับปฏิบัติการแพทย์อย่างรีบด่วน มิฉะนั้นจะทำให้การบาดเจ็บหรืออาการป่วยของผู้ป่วยฉุกเฉินนั้นรุนแรงขึ้น หรือเกิดภาวะแทรกซ้อนขึ้น ซึ่งส่งผลให้เสียชีวิตหรือพิการในระยะต่อมาได้'
+                    }
+                    else if (result == 'Resuscitation'){
+                        output.innerHTML = '<img src="https://i.ibb.co/k2tp7FB/resus.png" alt="background image"  style="max-width: 47%; height: auto; margin-top: 0;">';
+                        // description.innerHTML ='&ensp;ผู้ป่วยที่มีภาวะคุกคามที่จะทำให้เสียชีวิต ต้องกู้ชีพหรือช่วยเหลือทันที ผู้ป่วยที่ได้รับบาดเจ็บหรือมีอาการป่วยกะทันหัน ซึ่งมีภาวะคุกคามต่อชีวิตซึ่งหากไม่ได้รับปฏิบัติการแพทย์ทันทีเพื่อแก้ไขระบบหายใจ ระบบไหลเวียนเลือด หรือระบบประสาทแล้ว ผู้ป่วยจะมีโอกาสเสียชีวิตได้สูงหรือทำให้การบาดเจ็บหรืออาการป่วยของผู้ป่วยฉุกเฉินนั้นรุนแรงขึ้นหรือเกิดภาวะแทรกซ้อนขึ้นได้อย่างฉับไว'
+                    }
+                }
+            </script>
     </body>
 </html>
 {% endblock%}

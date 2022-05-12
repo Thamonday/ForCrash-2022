@@ -12,7 +12,7 @@
         
         @import url('https://fonts.googleapis.com/css?family=Kanit|Prompt');
         body {
-            background-color: white;
+            background-color: #C0DDED;
             background-image: url("{% static 'images/aboutus.jpg' %}");
             background-repeat: no-repeat;
             background-size: 900px;
@@ -30,24 +30,18 @@
             color: black;
             }
         .aboutus{
-            border-radius: 20px;
-            text-align: center;
-            color: black;
-            width: 500px;
-            height: 140px;
-            padding: 25px;
-            margin-left: 100px;
-            margin-top: 200px;
-        }
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 50%;
+          }
+
     </style>
 </head>   
     <body>
-        <!-- <div>
-            <img src="{% static 'images/aboutus.jpg' %}" alt="background image" style="max-width: 40%; height: auto;">
-        </div> -->
-        <div class='aboutus'>
-            <h2>เว็บแอปพลิเคชันสำหรับการวิเคราะห์ความรุนแรงของผู้บาดเจ็บจากอุบัติเหตุบนท้องถนน</h2>
-        </div>
+        <div class="embed-responsive embed-responsive-21by9" style="margin-top: 20px;">
+            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/tgbNymZ7vqY" allowfullscreen></iframe>
+          </div>
     </body>
 </html>
 {% endblock%}

@@ -62,19 +62,26 @@
         padding: 4px;
     }
 </style>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <body>
-
-{% if messages %}
-<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Kanit; text-align: center;">
-    {% for message in messages %}
-    <strong>เข้าสู่ระบบไม่เสำเร็จ!  </strong>{{message}}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    {% endfor%}
-</div>
-{%endif%}
+{% for message in messages %}
+    {% if 'success' == message.tags %}
+        <div id=mainAlertMessage class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Kanit; text-align: center;">
+            <strong>{{ message }} กรุณาเข้าสู่ระบบอีกครั้ง</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>    
+    {% endif %}
+    {% if 'error' == message.tags %}
+        <div id=mainAlertMessage class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Kanit; text-align: center;">
+            <strong>เข้าสู่ระบบไม่เสำเร็จ!  </strong>{{message}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endif %}
+{% endfor %}
 
 <form class ='box_loyout' action='/Home/' method='post'>
     {% csrf_token %} 
@@ -96,7 +103,7 @@
                 </p>
                 <p>
                     <input class="center" id="input_password" type="password" name="Password">
-                    <a class="center"style = "text-decoration:none; color:#3583EB ; font-size: 14px;" href="/register">ลืมรหัสผ่าน</a>   
+                    <a class="center"style = "text-decoration:none; color:#3583EB ; font-size: 14px;" data-toggle="modal" data-target="#ReportProblem">ลืมรหัสผ่าน</a>   
                 </p>
                 <p>
                     <button class="submit_button" type="submit">เข้าสู่ระบบ</button>
@@ -109,5 +116,72 @@
 
         </div>
     </div>
+    <div class="modal fade" id="ReportProblem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content" style=" font-family: 'Kanit', sans-serif;">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">ระบุอีเมลล์</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            <!-- <p></p> -->
+            <input class="form-control" id="ReportEmail" rows="3" ></input>
+            <!-- <p style="text-align: right;">ระบบจะทำการตอบกลับไปยังอีเมลล์ของท่าน</p> -->
+            </div>
+            <div class="modal-footer">
+            <button id="btnadd" type="button" class="btn btn-primary" onclick="finddata()">ส่ง</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+    <script id="MainScript">
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyD3qcCh1MxUoiqk7dld7hLuGVmx--ri3hY",
+            authDomain: "forcrashdemo.firebaseapp.com",
+            databaseURL: "https://forcrashdemo-default-rtdb.firebaseio.com",
+            projectId: "forcrashdemo",
+            storageBucket: "forcrashdemo.appspot.com",
+            messagingSenderId: "G-FJMZLMD0ZY",
+            appId: "1:216908476609:web:872afce2e6255e1e1fe440",
+        };
+        firebase.initializeApp(config);
+        // var Email = " {{ request.user.username }}"
+        var Email = document.getElementById('ReportEmail');
+        var password_ 
+
+        
+        function finddata(){
+          console.log(Email.value)
+          Email1 = Email.value
+          firebase.database().ref('Member').once('value').then(
+            function (snapshot){
+              const val = snapshot.val()
+              const keys = Object.keys(val)
+              const data_as_array = keys.map(e => ({...val[e], _key: e}))
+              const data_with_that_email = data_as_array.find(e => e.email === Email1)
+            //   const key_of_data_with_that_email = data_with_that_email._key
+              const password1 = data_with_that_email.password
+              password_ = password1
+            //   memberKey_ = key_of_data_with_that_email
+            //   console.log(password_)
+              alert('Your password is '+password_);
+            }
+          )
+        }
+      
+      </script>
 </body>
+<script>
+    $(document).ready(function() {
+        setTimeout(function() {
+            $('#mainAlertMessage').fadeOut('slow');
+        }, 3000); // <-- time in milliseconds, 1000 =  1 sec
+    });
+</script>
 {% endblock%}

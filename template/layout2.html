@@ -165,20 +165,22 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   </head>
 <body>
+  {% if user.is_authenticated %}
+  {% csrf_token %}
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
           <a class="logotext" href="/Home">
             <img src="https://i.ibb.co/CJ3rr49/logo-with-text.png" height="35" style="text-decoration: none;" alt="">
           </a>
             <ul class="nav justify-content-end">
-              <a class="nav-link" href="/history" id="navbarDropdownMenuLink" role="button" style="color: #323232;">ประวัติการทำนาย
+              <a class="nav-link" href="/history" id="navbarDropdownMenuLink" role="button" style="color: #323232;font-family: 'Kanit', sans-serif;">ประวัติการทำนาย
               </a>
-              <a class="nav-link" href="#" id="navbarDropdownMenuLink" role="button"style="color: #323232;">วิธีการใช้งาน
+              <a class="nav-link" href="#" id="navbarDropdownMenuLink" role="button"style="color: #323232;font-family: 'Kanit', sans-serif;">วิธีการใช้งาน
               </a>
               <div class="dropdown" style="font-family: 'Prompt', sans-serif ; margin-left: 10px;">
-                <a class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" style="color: white;">{{name}}</a>
+                <a class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" style="color: white;"> {{ request.user.email }}</a>
                 <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dLabel">            
-                  <li><a class="dropdown-item" data-toggle="modal" data-target="#editProfile">แก้ไขข้อมูลส่วนตัว</a></li>
+                  <li><a class="dropdown-item" data-toggle="modal" data-target="#ReportProblem">รายงานปัญหา</a></li>
                   <!-- <li><a class="dropdown-item" data-toggle="modal" data-target="#ReportProblem">แจ้งปัญหาการใช้งาน</a></li> -->
                   <!-- <li><hr class="dropdown-divider"></li> -->
                   <li><a class="dropdown-item" a href="/logout">ออกจากระบบ</a></li>
@@ -187,31 +189,83 @@
             </ul>
         </div>
       </nav>
-      <div class="modal fade" id="editProfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="ReportProblem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-          <div class="modal-content">
+        <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">แก้ไขข้อมูลส่วนตัว</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <h5 class="modal-title" id="exampleModalLabel">แจ้งปัญหาการใช้งาน</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
-              </button>
+            </button>
             </div>
-            <div class="modal-body" style="text-align: left;">
-              <h3>ขออภัยฟังชั่นยังไม่พร้อมใช้งาน</h3>
-              <!-- <label class="labs ">ชื่อ : </label>
-              <input type="text" id="Modname"> <br>
-              <label class="labs ">นาสกุล : </label>
-              <input type="text" id="ModLastname"> <br>
-              <label class="labs">หน่วยงาน : </label>
-              <input type="text" id="ModInst"> <br> -->
+            <div class="modal-body">
+            <textarea class="form-control" id="ReportProblemText" rows="3"></textarea>
             </div>
-            <!-- <div class="modal-footer">
-              <button id="updatePro" type="button" class="btn btn-primary" onclick="updateprofile()">บันทึก</button>
-            </div> -->
-          </div>
+            <div class="modal-footer">
+            <button id="btnadd" type="button" class="btn btn-primary" onclick="addReport()">บันทึก</button>
+            </div>
         </div>
-      </div>
+        </div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+    <script id="MainScript">
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyD3qcCh1MxUoiqk7dld7hLuGVmx--ri3hY",
+            authDomain: "forcrashdemo.firebaseapp.com",
+            databaseURL: "https://forcrashdemo-default-rtdb.firebaseio.com",
+            projectId: "forcrashdemo",
+            storageBucket: "forcrashdemo.appspot.com",
+            messagingSenderId: "G-FJMZLMD0ZY",
+            appId: "1:216908476609:web:872afce2e6255e1e1fe440",
+        };
+        firebase.initializeApp(config);
+        var Email = " {{ request.user.username }}"
+        var memberKey_ 
 
+        var ReportOld_ 
+        var ReportProblem = document.getElementById('ReportProblemText');
+        var BTNadd = document.getelementById('btnadd');
+        
+        function finddata(){
+          console.log(Email)
+          firebase.database().ref('Member').once('value').then(
+            function (snapshot){
+              const val = snapshot.val()
+              const keys = Object.keys(val)
+              const data_as_array = keys.map(e => ({...val[e], _key: e}))
+              const data_with_that_email = data_as_array.find(e => e.email === Email.trim())
+              const key_of_data_with_that_email = data_with_that_email._key
+              const ReportOld = data_with_that_email.report
+              ReportOld_ = ReportOld
+              memberKey_ = key_of_data_with_that_email
+              console.log(ReportOld,memberKey_)
+            }
+          )
+        }
+        function addReport(){
+          // window.onload = finddata;
+            firebase.database().ref("Member/"+memberKey_).update({
+              report: ReportOld_+" "+ReportProblem.value
+            }
+            ,
+
+            (error) =>{
+                if(error){
+                    alert("Report was not added, there was some problem");}
+                else{
+                    alert("Report was added");
+                    $("ReportProblem").modal('hide');
+                    window.location.reload(true);
+               }
+            }
+          )
+          window.onload = finddata; 
+        }
+      </script>
+    {% endif %}
 </body>
 {% block content%}
 {% endblock%}
