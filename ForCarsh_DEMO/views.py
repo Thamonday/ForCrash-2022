@@ -54,7 +54,7 @@ def register(request):
     return render(request,'Register.html')
 
 def aboutus(request):
-    return render(request,'aboutus.html')
+    return render(request,'Aboutus.html')
 
 def howto(request):
     return render(request,'HowTo.html')
