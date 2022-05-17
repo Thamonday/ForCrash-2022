@@ -59,6 +59,9 @@ def aboutus(request):
 def howto(request):
     return render(request,'HowTo.html')
 
+def howto2(request):
+    return render(request,'HowTo2.html')
+
 def history(request):
     global email_G
     return render(request,'History.html')

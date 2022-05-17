@@ -1,0 +1,47 @@
+
+{%extends 'layout2.html' %} 
+{% block content%}
+{% load static %}
+<!DOCTYPE html>
+<head>           
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--ดูดีทุกขนาดจอ-->
+    <meta name="description" content="...information about the web page">
+    <title>FORCRASH WebApp</title>
+    <style>
+        
+        @import url('https://fonts.googleapis.com/css?family=Kanit|Prompt');
+        body {
+            background-color: #C0DDED;
+            background-image: url("{% static 'images/aboutus.jpg' %}");
+            background-repeat: no-repeat;
+            background-size: 900px;
+            background-position: right;
+            /* background-attachment: fixed; */
+            }
+        h2   {
+            font-size: 20px;
+            font-family: 'Prompt', sans-serif;
+            color: black;
+            }
+        h3  {
+            font-size: 18px;
+            font-family: 'Prompt', sans-serif;
+            color: black;
+            }
+        .aboutus{
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 50%;
+          }
+
+    </style>
+</head>   
+    <body>
+        <div class="embed-responsive embed-responsive-21by9" >
+            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/3wKmCFeJYFI" allowfullscreen></iframe>
+          </div>
+    </body>
+</html>
+{% endblock%}
