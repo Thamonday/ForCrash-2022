@@ -13,7 +13,7 @@ from django.conf import settings
 import xgboost as xgb
 import pandas as pd
 from django.contrib import messages
-from datetime import datetime
+from datetime import datetime,timedelta
 from django.contrib.auth.models import User
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -32,8 +32,8 @@ firebaseConfig={ 'apiKey': "AIzaSyD3qcCh1MxUoiqk7dld7hLuGVmx--ri3hY",
 firebase=pyrebase.initialize_app(firebaseConfig)
 auth=firebase.auth()
 database=firebase.database()
+date_now = datetime.utcnow() + timedelta(hours=7)
 
-date_now = datetime.now()
 loginactive = 0
 Name = []
 email_G = []
@@ -104,17 +104,15 @@ def postregister(request):
         return redirect('/register')
 
 def postQuestionForm(request):
-    booster = xgb.Booster()
-    booster.load_model(r'models\bin_model1_xgboost.bin')
-    with open(r'models\sav_model1_xgboost.sav','rb') as f:
+    with open('./models/sav_model1_xgboost.sav','rb') as f:
         clf1 = pickle.load(f)
-    booster.load_model(r'models\bin_model2_xgboost.bin')
-    with open(r'models\sav_model2_xgboost.sav','rb') as f:
+    with open('./models/sav_model2_xgboost.sav','rb') as f:
         clf2 = pickle.load(f)
-    
+    date_now = datetime.utcnow() + timedelta(hours=7)
     day_of_week = date_now.strftime("%A")
     acc_month = int(date_now.strftime("%m"))
     acc_time = int(date_now.strftime("%H"))
+
 
     dict1 ={'Monday':0 ,'Tuesday':1 ,'Wednesday':2 ,'Thursday':3 ,'Friday':4 ,'Saturday':5 ,'Sunday':6 }
     n = 0
@@ -186,6 +184,7 @@ def postQuestionForm(request):
     rescuer = request.POST.get('rescuer')
     df['rescuer']= rescuer
     df['ERTriage']= '-'
+    df['datetimeReal']= '-'
     print(y_pred,rescuer)
     if rescuer == '1':
         y_pred = 'Resuscitation'
@@ -194,19 +193,9 @@ def postQuestionForm(request):
     to_firebase = pre[0]
     database.child('Form').push(to_firebase)
 
-    if y_pred == 'Non-Urgent':
-        finalResult = 'เจ็บป่วยไม่ฉุกเฉิน'
-    elif  y_pred == 'Semi-Urgent':
-        finalResult = 'ฉุกเฉินไม่เร่งด่วน'
-    elif  y_pred == 'Urgent':
-        finalResult = 'ฉุกเฉินไม่เร่งด่วน'
-    elif  y_pred == 'Emergency':
-        finalResult = 'ฉุกเฉินวิกฤติ'
-    elif  y_pred == 'Resuscitation':
-        finalResult = 'ไม่มีการตอบสนอง'
     ts = str(y_pred)
     print(type(ts),ts)
     ts = ts.replace('[', '')
     ts = ts.replace(']', '')
     ts = ts.replace('\'', '')
-    return render(request,'Result.html',{'result':ts,'finalResult':finalResult})
+    return render(request,'Result.html',{'result':ts})
