@@ -1,5 +1,3 @@
-from calendar import month
-import email
 from re import X
 from time import time
 from unicodedata import name
@@ -17,7 +15,7 @@ from datetime import datetime,timedelta
 from django.contrib.auth.models import User
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-
+from urllib.request import urlopen
 
 firebaseConfig={ 'apiKey': "AIzaSyD3qcCh1MxUoiqk7dld7hLuGVmx--ri3hY",
   'authDomain': "forcrashdemo.firebaseapp.com",
