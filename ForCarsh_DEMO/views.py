@@ -2,7 +2,7 @@ from re import X
 from time import time
 from unicodedata import name
 from django.shortcuts import redirect, render
-import pyrebase
+from pyrebase import pyrebase
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout,authenticate
 from django.contrib import auth as authe
