@@ -102,6 +102,7 @@ def postregister(request):
         return redirect('/register')
 
 def postQuestionForm(request):
+    print(xgb.__version__)
     with open('./models/sav_model1_xgboost.sav','rb') as f:
         clf1 = pickle.load(f)
     with open('./models/sav_model2_xgboost.sav','rb') as f:
@@ -167,9 +168,22 @@ def postQuestionForm(request):
     df= df.astype(int)
     
     y_pred = clf1.predict(df)
-    print(y_pred== 'Severe')
+    if y_pred == 0 :
+        y_pred = 'Non-Urgent'
+    elif y_pred == 1 :
+        y_pred = 'Semi-Urgent'
+    elif y_pred == 2 :
+        y_pred = 'Severe'
+
     if y_pred == 'Severe' :
         y_pred = clf2.predict(df)
+        if y_pred == 0 :
+            y_pred = 'Emergency'
+        elif y_pred == 1 :
+            y_pred = 'Resuscitation'
+        elif y_pred == 2 :
+            y_pred = 'Urgent'
+
     df['result']=y_pred
     user = request.user 
     df['email']= str(user) 
