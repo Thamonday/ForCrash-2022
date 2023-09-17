@@ -74,7 +74,7 @@ def postlogin(request):
     email = request.POST.get('Email')
     password = request.POST.get('Password')
     try:
-        user = auth.sign_in_with_email_and_password(email,password)
+        #user = auth.sign_in_with_email_and_password(email,password)
         user = authenticate(request, username=email, password=password)
         login(request, user)
         return render(request,'Home.html')
