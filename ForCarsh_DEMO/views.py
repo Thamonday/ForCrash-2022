@@ -74,7 +74,7 @@ def postlogin(request):
     email = request.POST.get('Email')
     password = request.POST.get('Password')
     try:
-        # user = auth.sign_in_with_email_and_password(email,password)
+        user = auth.sign_in_with_email_and_password(email,password)
         user = authenticate(request, username=email, password=password)
         login(request, user)
         return render(request,'Home.html')
@@ -96,6 +96,7 @@ def postregister(request):
                                  email=firstname,
                                  password=password)
         messages.success(request, 'ลงทะเบียนสำเร็จ')
+        user.save()
         return render(request,'Login.html')
     except: 
         messages.warning(request,"อีเมลนี้มีผู้ใช้แล้ว")
@@ -184,7 +185,6 @@ def postQuestionForm(request):
         elif y_pred == 2 :
             y_pred = 'Urgent'
 
-    df['result']=y_pred
     user = request.user 
     df['email']= str(user) 
     
@@ -201,6 +201,7 @@ def postQuestionForm(request):
     if rescuer == '1':
         y_pred = 'Resuscitation'
     
+    df['result']=y_pred
     pre=df.to_dict('records')
     to_firebase = pre[0]
     database.child('Form').push(to_firebase)
